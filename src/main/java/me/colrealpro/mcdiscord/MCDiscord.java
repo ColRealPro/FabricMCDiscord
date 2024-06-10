@@ -3,7 +3,9 @@ package me.colrealpro.mcdiscord;
 import me.colrealpro.mcdiscord.config.ConfigHandler;
 import me.colrealpro.mcdiscord.discord.DiscordBot;
 import me.colrealpro.mcdiscord.server.commands.TestCommand;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -125,9 +127,27 @@ public class MCDiscord implements ModInitializer {
             channelID = Channels.get(0).getId();
         }
 
+        MessageEmbed startupEmbed = new EmbedBuilder()
+            .setTitle("Server Started!")
+            .setFooter("MCDiscord - Linking Minecraft and Discord")
+            .setColor(0x73ff40)
+            .build();
+
+        discordBot.getBot().getGuildById(guildID).getChannelById(TextChannel.class, channelID)
+            .sendMessageEmbeds(startupEmbed).queue();
+
         // Stop bot when server stops
 
         ServerLifecycleEvents.SERVER_STOPPING.register((server) -> {
+            MessageEmbed shutdownEmbed = new EmbedBuilder()
+                .setTitle("Server Stopped!")
+                .setFooter("MCDiscord - Linking Minecraft and Discord")
+                .setColor(0xff4c38)
+                .build();
+
+            discordBot.getBot().getGuildById(guildID).getChannelById(TextChannel.class, channelID)
+                .sendMessageEmbeds(shutdownEmbed).queue();
+
             discordBot.stop();
         });
     }
