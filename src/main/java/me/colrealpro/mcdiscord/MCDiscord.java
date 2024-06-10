@@ -92,7 +92,7 @@ public class MCDiscord implements ModInitializer {
             String channelName = config.getDirectConfig().getString("MessagesChannel");
             Guild guild = discordBot.getBot().getGuildById(guildID);
 
-            LOGGER.info(Arrays.toString(discordBot.getBot().getGuilds().toArray()));
+//            LOGGER.info(Arrays.toString(discordBot.getBot().getGuilds().toArray()));
 
             if (guild == null) {
                 LOGGER.error("Failed to find guild with ID: {}", guildID);
@@ -100,7 +100,7 @@ public class MCDiscord implements ModInitializer {
                 return;
             }
 
-            LOGGER.info(Arrays.toString(guild.getTextChannelsByName(channelName, true).toArray()));
+//            LOGGER.info(Arrays.toString(guild.getTextChannelsByName(channelName, true).toArray()));
 
             @Unmodifiable List<TextChannel> Channels = guild.getTextChannelsByName(channelName, true);
 
