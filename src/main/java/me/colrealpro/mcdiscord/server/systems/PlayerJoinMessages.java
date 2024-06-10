@@ -39,6 +39,8 @@ public class PlayerJoinMessages {
             .setDescription(description)
             .build();
 
+        if (MCDiscord.isStopping()) return; // prevent jda from absolutely fucking killing itself
+
         MCDiscord.discordBot.getBot().getGuildById(MCDiscord.getGuildID()).getChannelById(TextChannel.class, MCDiscord.getDefaultChannelID())
             .sendMessageEmbeds(embed).queue();
     }

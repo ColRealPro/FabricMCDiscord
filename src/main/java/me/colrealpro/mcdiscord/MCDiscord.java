@@ -28,6 +28,7 @@ public class MCDiscord implements ModInitializer {
     public static ConfigHandler config;
     private static MinecraftServer server;
     public static DiscordBot discordBot;
+    private static boolean stopping = false;
     private static boolean initialized = false;
     private static String guildID;
     private static String channelID;
@@ -139,6 +140,8 @@ public class MCDiscord implements ModInitializer {
         // Stop bot when server stops
 
         ServerLifecycleEvents.SERVER_STOPPING.register((server) -> {
+            stopping = true;
+
             MessageEmbed shutdownEmbed = new EmbedBuilder()
                 .setTitle("Server Stopped!")
                 .setFooter("MCDiscord - Linking Minecraft and Discord")
@@ -162,5 +165,9 @@ public class MCDiscord implements ModInitializer {
 
     public static String getDefaultChannelID() {
         return channelID;
+    }
+
+    public static boolean isStopping() {
+        return stopping;
     }
 }
