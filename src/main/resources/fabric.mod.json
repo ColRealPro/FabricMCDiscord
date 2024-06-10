@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "mcdiscord",
+  "version": "${version}",
+  "name": "MCDiscord",
+  "description": "The mod that lets you link minecraft to discord",
+  "authors": [
+    "ColRealPro"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/MCDiscord/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.colrealpro.mcdiscord.client.MCDiscordClient"
+    ],
+    "main": [
+      "me.colrealpro.mcdiscord.MCDiscord"
+    ]
+  },
+  "mixins": [
+    "MCDiscord.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "fabric": "*",
+    "minecraft": "1.21-beta.4"
+  }
+}

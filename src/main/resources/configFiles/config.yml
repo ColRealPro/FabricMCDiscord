@@ -1,0 +1,61 @@
+# MCDiscord - Configuration File
+config-version: 1
+
+# Discord Bot Configuration
+
+# Discord Bot Token
+# If a token is not provided, the mod/plugin will be disabled.
+# You can get a token by creating a new bot at https://discord.com/developers/applications
+BotToken: YOUR_BOT_TOKEN_HERE
+
+# Discord Channel Information
+# This is the default channel that the bot will send minecraft chat messages to.
+# You have 2 options for this, either use the channel ID or the channel name.
+# If you use the channel name, if there is 2 channels with the same name
+# the mod/plugin will be disabled, and you will have to use the channel ID.
+MessagesChannel: CHANNEL_ID_OR_NAME_HERE
+UseChannelID: false
+
+# Guild/Discord Server ID
+# This is the ID of the Discord server that the bot will be sending messages to.
+# https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
+GuildID: YOUR_GUILD_ID_HERE
+
+# General Mod Config
+
+# This controls whether players can use the channel destinations feature
+# to send messages to other channels.
+# Note: This will check if the player has permissions on their discord account
+# to send messages to their desired channel, which also means they must be verified.
+# Default: true
+AllowChannelDestinations: true
+
+# Whether the bot should send messages when a player joins or leaves the server.
+# Default: true
+ShowJoinMessages: true
+
+# Whether the bot should send messages when a player dies.
+# Default: true
+ShowDeathMessages: true
+
+# Whether the bot should send advancement messages.
+# Default: true
+ShowAdvancementMessages: true
+
+# Save the last used channel a player sent a message to when they rejoin
+# Default: false
+SaveLastUsedChannel: false
+
+# Developer debug, should be disabled.
+# Default: false
+ShowDebug: false
+
+# Verification Config
+
+# If true, players will be kicked from the server until they verify their Discord account.
+# Default: false
+VerificationRequired: false
+
+# Verification Code Length is how long you want the verification code to be.
+# Default: 6 (Ex: VHO3P7)
+VerificationCodeLength: 6
