@@ -48,7 +48,7 @@ SaveLastUsedChannel: false
 
 # Developer debug, should be disabled.
 # Default: false
-ShowDebug: false
+Debug: false
 
 # Verification Config
 
