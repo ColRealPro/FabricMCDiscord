@@ -13,7 +13,7 @@ public class DiscordBot {
     private JDA bot;
 
     public DiscordBot(String token) {
-        EnumSet intents = EnumSet.of(
+        EnumSet<GatewayIntent> intents = EnumSet.of(
             GatewayIntent.GUILD_MESSAGES,
             GatewayIntent.MESSAGE_CONTENT
         );
