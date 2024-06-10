@@ -1,9 +1,7 @@
 package me.colrealpro.mcdiscord.mixin;
 
 import me.colrealpro.mcdiscord.MCDiscord;
-import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -15,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayNetworkHandler.class)
-public abstract class OnChatMessage {
+public abstract class OnChatMessageMixin {
 
     @Shadow public abstract ServerPlayerEntity getPlayer();
 
