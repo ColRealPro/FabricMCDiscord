@@ -58,6 +58,12 @@ public class MCDiscord implements ModInitializer {
             return;
         }
 
+        // Register commands
+
+        new TestCommand().build();
+
+        LOGGER.info("Commands successfully registered!");
+
         // REALLY REALLY REALLY hacky method of getting the current minecraft server
 
         ServerTickEvents.END_SERVER_TICK.register((server) -> {
@@ -118,12 +124,6 @@ public class MCDiscord implements ModInitializer {
 
             channelID = Channels.get(0).getId();
         }
-
-        // Register commands
-
-        new TestCommand().build();
-
-        LOGGER.info("Commands successfully registered!");
 
         // Stop bot when server stops
 
