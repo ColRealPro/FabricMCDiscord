@@ -1,6 +1,8 @@
 package me.colrealpro.mcdiscord.discord.eventListeners;
 
 import me.colrealpro.mcdiscord.MCDiscord;
+import me.colrealpro.mcdiscord.events.EventBus;
+import me.colrealpro.mcdiscord.events.discord.MessageEvent;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -16,15 +18,6 @@ public class MessageReceiveListener extends ListenerAdapter {
             return;
         }
 
-        String log = String.format("[%s] %#s: %s", event.getChannel(), event.getAuthor(), event.getMessage().getContentDisplay());
-        MCDiscord.LOGGER.info(log);
-
-        MutableText message = Text.literal("[").formatted(Formatting.WHITE)
-                .append(Text.literal("#" + event.getChannel().getName()).formatted(Formatting.BLUE))
-                .append(Text.literal("] ").formatted(Formatting.WHITE))
-                .append(Text.literal(event.getMember().getEffectiveName()).formatted(Formatting.WHITE).formatted(Formatting.BOLD))
-                .append(Text.literal(" >> ").formatted(Formatting.RESET).formatted(Formatting.DARK_GRAY))
-                .append(Text.literal(event.getMessage().getContentDisplay()).formatted(Formatting.RESET).formatted(Formatting.WHITE));
-        MCDiscord.getServer().getPlayerManager().broadcast(message, false);
+        EventBus.getInstance().dispatch(new MessageEvent(event));
     }
 }
