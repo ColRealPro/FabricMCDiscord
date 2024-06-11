@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 public class MCDiscord implements ModInitializer {
@@ -134,8 +133,7 @@ public class MCDiscord implements ModInitializer {
             .setColor(0x73ff40)
             .build();
 
-        discordBot.getBot().getGuildById(guildID).getChannelById(TextChannel.class, channelID)
-            .sendMessageEmbeds(startupEmbed).queue();
+        getDefaultChannel().sendMessageEmbeds(startupEmbed).queue();
 
         // Stop bot when server stops
 
@@ -148,8 +146,7 @@ public class MCDiscord implements ModInitializer {
                 .setColor(0xff4c38)
                 .build();
 
-            discordBot.getBot().getGuildById(guildID).getChannelById(TextChannel.class, channelID)
-                .sendMessageEmbeds(shutdownEmbed).queue();
+            getDefaultChannel().sendMessageEmbeds(shutdownEmbed).queue();
 
             discordBot.stop();
         });
@@ -165,6 +162,14 @@ public class MCDiscord implements ModInitializer {
 
     public static String getDefaultChannelID() {
         return channelID;
+    }
+
+    public static Guild getGuild() {
+        return discordBot.getBot().getGuildById(guildID);
+    }
+
+    public static TextChannel getDefaultChannel() {
+        return getGuild().getChannelById(TextChannel.class, channelID);
     }
 
     public static boolean isStopping() {
