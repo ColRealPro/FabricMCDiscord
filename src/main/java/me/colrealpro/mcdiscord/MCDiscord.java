@@ -29,6 +29,7 @@ public class MCDiscord implements ModInitializer {
     public static DiscordBot discordBot;
     private static boolean stopping = false;
     private static boolean initialized = false;
+    private static boolean debug = false;
     private static String guildID;
     private static String channelID;
 
@@ -59,6 +60,8 @@ public class MCDiscord implements ModInitializer {
             LOGGER.error("Failed to load config file, disabling mod");
             return;
         }
+
+        debug = config.getDirectConfig().getBoolean("Debug");
 
         // Register commands
 
@@ -174,5 +177,9 @@ public class MCDiscord implements ModInitializer {
 
     public static boolean isStopping() {
         return stopping;
+    }
+
+    public static boolean debugEnabled() {
+        return debug;
     }
 }
