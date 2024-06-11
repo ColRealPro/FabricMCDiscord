@@ -17,7 +17,7 @@ public class EventBus {
     private static final Logger LOGGER = LoggerFactory.getLogger("EventBus");
     private final List<Object> registeredObjects = new ArrayList<>();
     private static EventBus instance;
-    private boolean debugEnabled;
+    private final boolean debugEnabled;
 
     private EventBus() {
         Reflections reflections = new Reflections(new ConfigurationBuilder()
