@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public class EventBus {
-    private static final Logger LOGGER = LoggerFactory.getLogger("EventBus");
+    private static final Logger LOGGER = LoggerFactory.getLogger("MCDiscordEventBus");
     private final List<Object> registeredObjects = new ArrayList<>();
     private static EventBus instance;
     private final boolean debugEnabled;
@@ -25,10 +25,15 @@ public class EventBus {
         .setScanners(new MethodAnnotationsScanner()));
 
         Set<Method> methods = reflections.getMethodsAnnotatedWith(EventHandler.class);
+        List<Object> registeredClasses = new ArrayList<>();
         for (Method method : methods) {
             try {
+                if (registeredClasses.contains(method.getDeclaringClass())) {
+                    continue; // prevent the same class from being registered multiple times -_-
+                }
+
+                registeredClasses.add(method.getDeclaringClass());
                 register(method.getDeclaringClass().getDeclaredConstructor().newInstance());
-                break; // prevent the same class from being registered multiple times -_-
             } catch (Exception e) {
                 throw new RuntimeException("Failed to register event handler", e);
             }
@@ -46,7 +51,7 @@ public class EventBus {
 
     public void register(Object object) {
         if (debugEnabled) {
-            LOGGER.debug("Registering event handler {}", object.getClass().getSimpleName());
+            LOGGER.info("Registering event handler {}", object.getClass().getSimpleName());
         }
 
         registeredObjects.add(object);
@@ -54,16 +59,17 @@ public class EventBus {
 
     public void dispatch(CancellableEvent event) {
         if (debugEnabled) {
-            LOGGER.debug("Dispatching event {} to {} listeners", event.getClass().getSimpleName(), registeredObjects.size());
+            LOGGER.info("Dispatching event {} to {} listeners", event.getClass().getSimpleName(), registeredObjects.size());
         }
 
         for (Object obj : registeredObjects) {
+            LOGGER.info("Checking object: {}", obj.getClass().getSimpleName());
             for (Method method : obj.getClass().getMethods()) {
                 if (method.isAnnotationPresent(EventHandler.class) && method.getParameterCount() == 1
                 && method.getParameters()[0].getType().isAssignableFrom(event.getClass())) {
                     try {
                         if (debugEnabled) {
-                            LOGGER.debug("Dispatching event {} to {}", event.getClass().getSimpleName(), obj.getClass().getSimpleName());
+                            LOGGER.info("Dispatching event {} to {}", event.getClass().getSimpleName(), obj.getClass().getSimpleName());
                         }
 
                         method.invoke(obj, event);
