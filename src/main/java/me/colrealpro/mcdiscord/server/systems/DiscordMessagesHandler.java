@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class DiscordMessagesHandler {
-    private final HashMap<UUID, HashMap<String, Boolean>> enabledChannelsForPlayers = new HashMap<>();
+    private static final HashMap<UUID, HashMap<String, Boolean>> enabledChannelsForPlayers = new HashMap<>();
 
     @EventHandler
     public void onMessage(MessageEvent event) {
@@ -25,12 +25,7 @@ public class DiscordMessagesHandler {
             MCDiscord.LOGGER.info("checking player: {}", player.getName().getString());
 
             if (!enabledChannelsForPlayers.containsKey(player.getUuid())) {
-                HashMap<String, Boolean> newChannelsHashMap = new HashMap<>();
-                enabledChannelsForPlayers.put(player.getUuid(), newChannelsHashMap);
-
-                // enable default channel for all players
-                String defaultChannelName = MCDiscord.getDefaultChannel().getName();
-                newChannelsHashMap.put(defaultChannelName, true);
+                createMapForPlayer(player.getUuid());
             }
 
             HashMap<String, Boolean> channels = enabledChannelsForPlayers.get(player.getUuid());
@@ -58,5 +53,32 @@ public class DiscordMessagesHandler {
 
             player.sendMessage(message, false);
         }
+    }
+
+    public static void setChannelEnabledForPlayer(UUID playerUUID, String channelName, boolean enabled) {
+        if (!enabledChannelsForPlayers.containsKey(playerUUID)) {
+            createMapForPlayer(playerUUID);
+        }
+
+        if (isDuplicateChannel(channelName)) return;
+
+        enabledChannelsForPlayers.get(playerUUID).put(channelName, enabled);
+    }
+
+    public static boolean isDuplicateChannel(String channelName) {
+        return MCDiscord.getGuild().getTextChannelsByName(channelName, true).size() > 1;
+    }
+
+    public static boolean doesChannelExist(String channelName) {
+        return !MCDiscord.getGuild().getTextChannelsByName(channelName, true).isEmpty();
+    }
+
+    public static void createMapForPlayer(UUID playerUUID) {
+        HashMap<String, Boolean> newChannelsHashMap = new HashMap<>();
+        enabledChannelsForPlayers.put(playerUUID, newChannelsHashMap);
+
+        // enable default channel for all players
+        String defaultChannelName = MCDiscord.getDefaultChannel().getName();
+        newChannelsHashMap.put(defaultChannelName, true);
     }
 }
