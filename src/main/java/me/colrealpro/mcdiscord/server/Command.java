@@ -20,6 +20,7 @@ public class Command {
     private final String commandName;
     private final Argument[] arguments;
     private int amountOfArguments = 0;
+    private int levelRequirement = 0;
 
     public Command(String commandName) {
         this.commandName = commandName.toLowerCase();
@@ -43,6 +44,10 @@ public class Command {
         }
     }
 
+    public void setLevelRequirement(int permissionLevel) {
+        this.levelRequirement = permissionLevel;
+    }
+
     public int onExecute(CommandContext<ServerCommandSource> context) {
         return 0;
     }
@@ -51,6 +56,8 @@ public class Command {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             LiteralArgumentBuilder<ServerCommandSource> commandLiteral = CommandManager.literal(commandName);
             List<RequiredArgumentBuilder<ServerCommandSource, ?>> argumentList = new ArrayList<>();
+
+            commandLiteral.requires(source -> source.hasPermissionLevel(levelRequirement));
 
             int argumentCounter = 0;
             for (Argument argument : arguments) {
