@@ -4,4 +4,5 @@ public enum CommandType {
     INTEGER,
     STRING,
     BOOLEAN,
+    DISCORD_CHANNEL,
 }
