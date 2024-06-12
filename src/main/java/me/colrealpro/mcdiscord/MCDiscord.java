@@ -2,6 +2,7 @@ package me.colrealpro.mcdiscord;
 
 import me.colrealpro.mcdiscord.config.ConfigHandler;
 import me.colrealpro.mcdiscord.discord.DiscordBot;
+import me.colrealpro.mcdiscord.server.commands.ShowChannelCommand;
 import me.colrealpro.mcdiscord.server.commands.TestCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -66,6 +67,7 @@ public class MCDiscord implements ModInitializer {
         // Register commands
 
         new TestCommand().build();
+        new ShowChannelCommand().build();
 
         LOGGER.info("Commands successfully registered!");
 
