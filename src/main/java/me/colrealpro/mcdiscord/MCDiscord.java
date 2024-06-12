@@ -39,27 +39,10 @@ public class MCDiscord implements ModInitializer {
     public void onInitialize() {
         // Initialize config
 
-        File configFile = FabricLoader.getInstance().getConfigDir().resolve("MCDiscord/config.yml").toFile();
-        InputStream defaultConfigFile;
-        try {
-            URL defaultConfigResource = MCDiscord.class.getResource("/configFiles/config.yml");
+        config = loadConfig("config.yml");
 
-            if (defaultConfigResource == null) {
-                LOGGER.error("Failed to find default config file");
-                throw new IOException("Failed to find default config file");
-            }
-
-            defaultConfigFile = defaultConfigResource.openStream();
-        } catch (IOException e) {
-            LOGGER.error("Failed to load default config file: ", e);
-            LOGGER.error("Disabling mod");
-            return;
-        }
-
-        config = new ConfigHandler(configFile, defaultConfigFile);
-
-        if (!config.isLoaded()) {
-            LOGGER.error("Failed to load config file, disabling mod");
+        if (config == null || !config.isLoaded()) {
+            LOGGER.error("Failed to load config, stopping initialization...");
             return;
         }
 
@@ -185,5 +168,25 @@ public class MCDiscord implements ModInitializer {
 
     public static boolean debugEnabled() {
         return debug;
+    }
+
+    public static ConfigHandler loadConfig(String fileName) {
+        File configFile = FabricLoader.getInstance().getConfigDir().resolve("MCDiscord/" + fileName).toFile();
+        InputStream defaultConfigFile;
+        try {
+            URL defaultConfigResource = MCDiscord.class.getResource("/configFiles/" + fileName);
+
+            if (defaultConfigResource == null) {
+                LOGGER.error("Failed to find default config file");
+                throw new IOException("Failed to find default config file");
+            }
+
+            defaultConfigFile = defaultConfigResource.openStream();
+        } catch (IOException e) {
+            LOGGER.error("Failed to load default config file: ", e);
+            return null;
+        }
+
+        return new ConfigHandler(configFile, defaultConfigFile);
     }
 }
