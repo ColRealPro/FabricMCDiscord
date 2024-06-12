@@ -9,4 +9,14 @@ public class StringUtils {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
+    public static String generateSalt(int length) {
+        String saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder salt = new StringBuilder();
+        while (salt.length() < length) {
+            int index = (int) (Math.random() * saltChars.length());
+            salt.append(saltChars.charAt(index));
+        }
+        return salt.toString();
+    }
+
 }
