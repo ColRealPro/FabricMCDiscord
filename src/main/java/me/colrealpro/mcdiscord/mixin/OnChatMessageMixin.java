@@ -22,9 +22,7 @@ public abstract class OnChatMessageMixin {
         this.getPlayer().getName();
         MCDiscord.LOGGER.info(message.getContent().getString());
 
-        String discordMessage = String.format("<%s> %s", this.getPlayer().getName().getString(), message.getContent().getString());
-        MCDiscord.LOGGER.info(discordMessage);
-        MCDiscord.getServer().getPlayerManager().broadcast(Text.literal(discordMessage), true);
+        String discordMessage = String.format("**<%s>** %s", this.getPlayer().getName().getString(), message.getContent().getString());
 
         // send to discord
         MCDiscord.discordBot.getBot().getGuildById(MCDiscord.getGuildID()).getChannelById(TextChannel.class, MCDiscord.getDefaultChannelID())
