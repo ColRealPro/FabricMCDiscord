@@ -10,7 +10,7 @@ public class TestCommand extends Command {
 
     public TestCommand() {
         super("test");
-        super.registerArgument("test", CommandType.INTEGER);
+//        super.registerArgument("test", CommandType.INTEGER);
     }
 
     @Override
