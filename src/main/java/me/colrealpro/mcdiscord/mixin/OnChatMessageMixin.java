@@ -1,11 +1,12 @@
 package me.colrealpro.mcdiscord.mixin;
 
 import me.colrealpro.mcdiscord.MCDiscord;
+import me.colrealpro.mcdiscord.events.EventBus;
+import me.colrealpro.mcdiscord.events.game.GameChatMessageEvent;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,15 +18,15 @@ public abstract class OnChatMessageMixin {
 
     @Shadow public abstract ServerPlayerEntity getPlayer();
 
-    @Inject(method = "handleDecoratedMessage", at = @At("HEAD"))
+    @Inject(method = "handleDecoratedMessage", at = @At("HEAD"), cancellable = true)
     private void onChatMessage(SignedMessage message, CallbackInfo ci) {
         this.getPlayer().getName();
-        MCDiscord.LOGGER.info(message.getContent().getString());
 
-        String discordMessage = String.format("**<%s>** %s", this.getPlayer().getName().getString(), message.getContent().getString());
+        GameChatMessageEvent event = new GameChatMessageEvent(this.getPlayer(), message.getContent().getString())
+        EventBus.getInstance().dispatch(event);
 
-        // send to discord
-        MCDiscord.discordBot.getBot().getGuildById(MCDiscord.getGuildID()).getChannelById(TextChannel.class, MCDiscord.getDefaultChannelID())
-            .sendMessage(discordMessage).queue();
+        if (event.isCancelled()) {
+            ci.cancel();
+        }
     }
 }
