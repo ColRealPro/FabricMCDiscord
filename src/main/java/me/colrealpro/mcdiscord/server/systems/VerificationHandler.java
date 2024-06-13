@@ -159,22 +159,6 @@ public class VerificationHandler {
         return config.getString("Users." + playerUUID + ".DiscordID");
     }
 
-    public static String getDiscordAccountNameString(String discordID) {
-        User user = MCDiscord.discordBot.getBot().getUserById(discordID);
-
-        if (user == null) {
-            return "Unknown User";
-        }
-
-        String accountString = String.format("%s (%s)", user.getEffectiveName(), user.getName());
-
-        if (user.getEffectiveName().equals(user.getName())) {
-            accountString = user.getName();
-        }
-
-        return accountString;
-    }
-
     public boolean isVerificationRequired() {
         return MCDiscord.config.getDirectConfig().getBoolean("VerificationRequired");
     }
