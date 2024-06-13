@@ -65,6 +65,14 @@ public class DiscordMessagesHandler {
         enabledChannelsForPlayers.get(playerUUID).put(channelName, enabled);
     }
 
+    public static boolean isChannelEnabledForPlayer(UUID playerUUID, String channelName) {
+        if (!enabledChannelsForPlayers.containsKey(playerUUID)) {
+            createMapForPlayer(playerUUID);
+        }
+
+        return enabledChannelsForPlayers.get(playerUUID).getOrDefault(channelName, false);
+    }
+
     public static boolean isDuplicateChannel(String channelName) {
         return MCDiscord.getGuild().getTextChannelsByName(channelName, true).size() > 1;
     }
