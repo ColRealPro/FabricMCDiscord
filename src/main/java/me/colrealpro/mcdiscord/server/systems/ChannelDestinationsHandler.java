@@ -45,13 +45,14 @@ public class ChannelDestinationsHandler {
             cachedMember = MCDiscord.getGuild().getMemberById(discordID);
         }
 
+        event.setCancelled(true);
         if (cachedMember == null) {
             MCDiscord.getGuild().retrieveMemberById(discordID).queue(member -> {
-                VerificationHandler.addUserToCache(event.getPlayer().getUuid(), member);
+                VerificationHandler.addUserToCache(discordID, member);
                 handleExternalChannelMessage(event.getPlayer(), member, information);
             });
         } else {
-            VerificationHandler.addUserToCache(event.getPlayer().getUuid(), cachedMember);
+            VerificationHandler.addUserToCache(discordID, cachedMember);
             handleExternalChannelMessage(event.getPlayer(), cachedMember, information);
         }
     }
@@ -93,6 +94,11 @@ public class ChannelDestinationsHandler {
 
         @Unmodifiable List<TextChannel> channelsList = MCDiscord.getGuild().getTextChannelsByName(channelName, true);
         TextChannel channel = channelsList.isEmpty() ? null : channelsList.get(0);
+
+        if (channelsList.size() > 1) {
+            player.sendMessage(NotificationBuilder.getFormatted("There is more than 1 channel with this name"));
+            return null;
+        }
 
         if (channel == null) {
             return new ChatMessageInformation(message, MCDiscord.getDefaultChannel());
