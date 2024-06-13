@@ -47,7 +47,7 @@ public class DiscordMessagesHandler {
             MutableText message = Text.literal("[").formatted(Formatting.WHITE)
                 .append(Text.literal("#" + StringUtils.capitalize(event.getChannel().getName())).formatted(Formatting.BLUE))
                 .append(Text.literal("] ").formatted(Formatting.WHITE))
-                .append(Text.literal(event.getAuthor().getEffectiveName()).formatted(Formatting.WHITE).formatted(Formatting.BOLD))
+                .append(Text.literal(event.getMember().getEffectiveName()).formatted(Formatting.WHITE).formatted(Formatting.BOLD))
                 .append(Text.literal(" >> ").formatted(Formatting.RESET).formatted(Formatting.DARK_GRAY))
                 .append(Text.literal(event.getMessage()).formatted(Formatting.RESET).formatted(Formatting.WHITE));
 
