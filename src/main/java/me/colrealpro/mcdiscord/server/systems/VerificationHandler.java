@@ -8,6 +8,7 @@ import me.colrealpro.mcdiscord.events.discord.MessageEvent;
 import me.colrealpro.mcdiscord.events.game.PlayerAttemptLoginEvent;
 import me.colrealpro.mcdiscord.utils.NotificationBuilder;
 import me.colrealpro.mcdiscord.utils.StringUtils;
+import net.dv8tion.jda.api.entities.User;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -146,6 +147,32 @@ public class VerificationHandler {
         }
 
         return config.contains("Users." + playerUUID + ".DiscordID");
+    }
+
+    public static String getDiscordAccount(UUID playerUUID) {
+        YamlDocument config = getDirectConfig();
+
+        if (config == null || playerData == null) {
+            return null;
+        }
+
+        return config.getString("Users." + playerUUID + ".DiscordID");
+    }
+
+    public static String getDiscordAccountNameString(String discordID) {
+        User user = MCDiscord.discordBot.getBot().getUserById(discordID);
+
+        if (user == null) {
+            return "Unknown User";
+        }
+
+        String accountString = String.format("%s (%s)", user.getEffectiveName(), user.getName());
+
+        if (user.getEffectiveName().equals(user.getName())) {
+            accountString = user.getName();
+        }
+
+        return accountString;
     }
 
     public boolean isVerificationRequired() {
