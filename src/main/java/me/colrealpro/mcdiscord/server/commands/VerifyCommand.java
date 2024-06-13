@@ -44,11 +44,11 @@ public class VerifyCommand extends Command {
 
             if (cachedUser == null) {
                 MCDiscord.getGuild().retrieveMemberById(discordID).queue(user -> {
-                    VerificationHandler.addUserToCache(player.getUuid(), user);
+                    VerificationHandler.addUserToCache(discordID, user);
                     alreadyVerifiedMessage(context, user.getUser());
                 });
             } else {
-                VerificationHandler.addUserToCache(player.getUuid(), cachedUser); // yes, this will overwrite the user with the same user, but it doesn't matter
+                VerificationHandler.addUserToCache(discordID, cachedUser); // yes, this will overwrite the user with the same user, but it doesn't matter
                 alreadyVerifiedMessage(context, cachedUser.getUser());
             }
 

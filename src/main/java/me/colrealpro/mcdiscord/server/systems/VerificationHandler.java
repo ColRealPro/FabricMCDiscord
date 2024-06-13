@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class VerificationHandler {
     private static final ConfigHandler playerData = MCDiscord.loadConfig("playerData.yml");
-    private static final HashMap<UUID, Member> userCache = new HashMap<>();
+    private static final HashMap<String, Member> userCache = new HashMap<>();
 
     @EventHandler
     @SuppressWarnings("deprecation")
@@ -172,8 +172,8 @@ public class VerificationHandler {
         return config.getString("Users." + playerUUID + ".DiscordID");
     }
 
-    public static void addUserToCache(UUID playerUUID, Member user) {
-        userCache.put(playerUUID, user);
+    public static void addUserToCache(String discordID, Member user) {
+        userCache.put(discordID, user);
     }
 
     public static Member getUserFromCache(UUID playerUUID) {
