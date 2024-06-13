@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.jetbrains.annotations.Unmodifiable;
+
+import java.util.List;
 
 public class ChannelDestinationsHandler {
 
@@ -16,6 +19,7 @@ public class ChannelDestinationsHandler {
         ChatMessageInformation information = parseMessage(event.getPlayer(), event.getMessage());
 
         if (information == null) {
+            event.getPlayer().sendMessage(NotificationBuilder.getFormatted("An error occurred whilst trying to send the message!"));
             event.setCancelled(true);
             return;
         }
@@ -87,7 +91,8 @@ public class ChannelDestinationsHandler {
 
         String channelName = splitMessage[0];
 
-        TextChannel channel = MCDiscord.discordBot.getBot().getTextChannelsByName(channelName, true).get(0);
+        @Unmodifiable List<TextChannel> channelsList = MCDiscord.getGuild().getTextChannelsByName(channelName, true);
+        TextChannel channel = channelsList.isEmpty() ? null : channelsList.get(0);
 
         if (channel == null) {
             return new ChatMessageInformation(message, MCDiscord.getDefaultChannel());
