@@ -5,6 +5,7 @@ import me.colrealpro.mcdiscord.MCDiscord;
 import me.colrealpro.mcdiscord.server.Command;
 import me.colrealpro.mcdiscord.server.systems.VerificationHandler;
 import me.colrealpro.mcdiscord.utils.NotificationBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,21 +35,21 @@ public class VerifyCommand extends Command {
 
             if (discordID == null) return 0; // THIS SHOULD NEVER HAPPEN
 
-            User cachedUser = VerificationHandler.getUserFromCache(player.getUuid());
+            Member cachedUser = VerificationHandler.getUserFromCache(player.getUuid());
 
             if (cachedUser == null) {
                 // attempt to get it from the jda cache, however this doesn't always work -_-
-                cachedUser = MCDiscord.discordBot.getBot().getUserById(discordID);
+                cachedUser = MCDiscord.getGuild().getMemberById(discordID);
             }
 
             if (cachedUser == null) {
-                MCDiscord.discordBot.getBot().retrieveUserById(discordID).queue(user -> {
+                MCDiscord.getGuild().retrieveMemberById(discordID).queue(user -> {
                     VerificationHandler.addUserToCache(player.getUuid(), user);
-                    alreadyVerifiedMessage(context, user);
+                    alreadyVerifiedMessage(context, user.getUser());
                 });
             } else {
                 VerificationHandler.addUserToCache(player.getUuid(), cachedUser); // yes, this will overwrite the user with the same user, but it doesn't matter
-                alreadyVerifiedMessage(context, cachedUser);
+                alreadyVerifiedMessage(context, cachedUser.getUser());
             }
 
             return 0;

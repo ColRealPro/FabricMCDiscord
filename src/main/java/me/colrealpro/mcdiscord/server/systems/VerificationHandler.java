@@ -8,7 +8,7 @@ import me.colrealpro.mcdiscord.events.discord.MessageEvent;
 import me.colrealpro.mcdiscord.events.game.PlayerAttemptLoginEvent;
 import me.colrealpro.mcdiscord.utils.NotificationBuilder;
 import me.colrealpro.mcdiscord.utils.StringUtils;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.Member;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class VerificationHandler {
     private static final ConfigHandler playerData = MCDiscord.loadConfig("playerData.yml");
-    private static final HashMap<UUID, User> userCache = new HashMap<>();
+    private static final HashMap<UUID, Member> userCache = new HashMap<>();
 
     @EventHandler
     @SuppressWarnings("deprecation")
@@ -172,11 +172,11 @@ public class VerificationHandler {
         return config.getString("Users." + playerUUID + ".DiscordID");
     }
 
-    public static void addUserToCache(UUID playerUUID, User user) {
+    public static void addUserToCache(UUID playerUUID, Member user) {
         userCache.put(playerUUID, user);
     }
 
-    public static User getUserFromCache(UUID playerUUID) {
+    public static Member getUserFromCache(UUID playerUUID) {
         return userCache.get(playerUUID);
     }
 
