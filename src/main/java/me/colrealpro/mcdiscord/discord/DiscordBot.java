@@ -15,7 +15,8 @@ public class DiscordBot {
     public DiscordBot(String token) {
         EnumSet<GatewayIntent> intents = EnumSet.of(
             GatewayIntent.GUILD_MESSAGES,
-            GatewayIntent.MESSAGE_CONTENT
+            GatewayIntent.MESSAGE_CONTENT,
+            GatewayIntent.DIRECT_MESSAGES
         );
 
         this.builder = JDABuilder.createLight(token, intents);
