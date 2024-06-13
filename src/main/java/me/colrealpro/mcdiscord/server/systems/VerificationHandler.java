@@ -6,7 +6,9 @@ import me.colrealpro.mcdiscord.config.ConfigHandler;
 import me.colrealpro.mcdiscord.events.EventHandler;
 import me.colrealpro.mcdiscord.events.discord.MessageEvent;
 import me.colrealpro.mcdiscord.events.game.PlayerAttemptLoginEvent;
+import me.colrealpro.mcdiscord.utils.NotificationBuilder;
 import me.colrealpro.mcdiscord.utils.StringUtils;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -40,7 +42,7 @@ public class VerificationHandler {
                 .append(Text.literal(MCDiscord.discordBot.getBot().getSelfUser().getAsTag()).formatted(Formatting.YELLOW))
                 .append(Text.literal(" the following characters").formatted(Formatting.WHITE))
                 .append(Text.literal("\n\n" + verificationCode).formatted(Formatting.YELLOW)
-                .append(Text.literal("\n\nIf it fails to verify you please reconnect for a new verification code").formatted(Formatting.WHITE)));
+                    .append(Text.literal("\n\nIf it fails to verify you please reconnect for a new verification code").formatted(Formatting.WHITE)));
 
             event.setCancelled(true);
             event.setKickReason(kickReason);
@@ -84,6 +86,20 @@ public class VerificationHandler {
         playerData.save();
 
         event.getRawEvent().getMessage().reply("You have been successfully linked to the Minecraft Account: **" + playerName + "**").queue();
+
+        ServerPlayerEntity player = MCDiscord.getServer().getPlayerManager().getPlayer(playerUUID);
+
+        if (player != null) {
+            String accountString = String.format("%s (%s)", event.getAuthor().getEffectiveName(), event.getAuthor().getName());
+
+            if (event.getAuthor().getEffectiveName().equals(event.getAuthor().getName())) {
+                accountString = event.getAuthor().getName();
+            }
+
+            MutableText confirmationMessage = NotificationBuilder.getFormatted("You were successfully linked to the Discord Account: ")
+                .append(Text.literal(accountString).formatted(Formatting.GRAY));
+            player.sendMessage(confirmationMessage, false);
+        }
     }
 
     private static YamlDocument getDirectConfig() {
