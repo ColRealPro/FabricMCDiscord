@@ -4,6 +4,7 @@ import me.colrealpro.mcdiscord.config.ConfigHandler;
 import me.colrealpro.mcdiscord.discord.DiscordBot;
 import me.colrealpro.mcdiscord.server.commands.ReloadConfigCommand;
 import me.colrealpro.mcdiscord.server.commands.ShowChannelCommand;
+import me.colrealpro.mcdiscord.server.commands.UnverifyCommand;
 import me.colrealpro.mcdiscord.server.commands.VerifyCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -53,6 +54,7 @@ public class MCDiscord implements ModInitializer {
         new ShowChannelCommand().build();
         new ReloadConfigCommand().build();
         new VerifyCommand().build();
+        new UnverifyCommand().build();
 
         LOGGER.info("Commands successfully registered!");
 
