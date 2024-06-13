@@ -1,9 +1,7 @@
 package me.colrealpro.mcdiscord.mixin;
 
-import me.colrealpro.mcdiscord.MCDiscord;
 import me.colrealpro.mcdiscord.events.EventBus;
 import me.colrealpro.mcdiscord.events.game.GameChatMessageEvent;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
