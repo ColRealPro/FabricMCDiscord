@@ -138,6 +138,16 @@ public class VerificationHandler {
         return code;
     }
 
+    public static boolean isPlayerVerified(UUID playerUUID) {
+        YamlDocument config = getDirectConfig();
+
+        if (config == null || playerData == null) {
+            return false;
+        }
+
+        return config.contains("Users." + playerUUID + ".DiscordID");
+    }
+
     public boolean isVerificationRequired() {
         return MCDiscord.config.getDirectConfig().getBoolean("VerificationRequired");
     }
