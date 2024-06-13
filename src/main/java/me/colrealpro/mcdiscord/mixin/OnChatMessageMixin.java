@@ -20,7 +20,7 @@ public abstract class OnChatMessageMixin {
     private void onChatMessage(SignedMessage message, CallbackInfo ci) {
         this.getPlayer().getName();
 
-        GameChatMessageEvent event = new GameChatMessageEvent(this.getPlayer(), message.getContent().getString())
+        GameChatMessageEvent event = new GameChatMessageEvent(this.getPlayer(), message.getContent().getString());
         EventBus.getInstance().dispatch(event);
 
         if (event.isCancelled()) {
