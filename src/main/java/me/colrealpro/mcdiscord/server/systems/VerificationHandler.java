@@ -105,6 +105,17 @@ public class VerificationHandler {
         }
     }
 
+    public static void removeVerification(UUID playerUUID) {
+        YamlDocument config = getDirectConfig();
+
+        if (config == null || playerData == null) {
+            return;
+        }
+
+        config.remove("Users." + playerUUID + ".DiscordID");
+        playerData.save();
+    }
+
     private static YamlDocument getDirectConfig() {
         if (playerData == null) {
             MCDiscord.LOGGER.error("Failed to load playerData.yml (1) - THIS IS LIKELY YOUR FAULT ILL BE HONEST, BUT REPORT IT ANYWAY ON GITHUB");
@@ -169,7 +180,7 @@ public class VerificationHandler {
         return userCache.get(playerUUID);
     }
 
-    public boolean isVerificationRequired() {
+    public static boolean isVerificationRequired() {
         return MCDiscord.config.getDirectConfig().getBoolean("VerificationRequired");
     }
 }
