@@ -50,7 +50,6 @@ public class MCDiscord implements ModInitializer {
 
         // Register commands
 
-        new TestCommand().build();
         new ShowChannelCommand().build();
         new ReloadConfigCommand().build();
         new VerifyCommand().build();
