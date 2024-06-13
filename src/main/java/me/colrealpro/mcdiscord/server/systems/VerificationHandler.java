@@ -14,10 +14,12 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class VerificationHandler {
     private static final ConfigHandler playerData = MCDiscord.loadConfig("playerData.yml");
+    private static final HashMap<UUID, User> userCache = new HashMap<>();
 
     @EventHandler
     @SuppressWarnings("deprecation")
@@ -157,6 +159,14 @@ public class VerificationHandler {
         }
 
         return config.getString("Users." + playerUUID + ".DiscordID");
+    }
+
+    public static void addUserToCache(UUID playerUUID, User user) {
+        userCache.put(playerUUID, user);
+    }
+
+    public static User getUserFromCache(UUID playerUUID) {
+        return userCache.get(playerUUID);
     }
 
     public boolean isVerificationRequired() {
