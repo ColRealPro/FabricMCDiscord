@@ -45,7 +45,22 @@ dependencies {
     implementation 'org.reflections:reflections:0.9.12'
 
     // include dependencies
+
+    // JDA (I HATE YOU SO MUCH FOR THIS LONG LIST)
     include "net.dv8tion:JDA:5.0.0-beta.24"
+    include 'org.json:json:20231013'
+    include 'com.squareup.okio:okio:3.6.0'
+    include 'com.squareup.okio:okio-jvm:3.6.0'
+    include 'com.squareup.okhttp3:okhttp:4.12.0'
+    include 'org.apache.commons:commons-collections4:4.4'
+    include 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
+    include "com.neovisionaries:nv-websocket-client:2.14"
+    include "net.sf.trove4j:trove4j:3.0.3"
+    include 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    include 'com.fasterxml.jackson.core:jackson-annotations:2.17.1'
+    include 'com.fasterxml.jackson.core:jackson-core:2.17.0'
+
+    // other dependencies
     include "dev.dejvokep:boosted-yaml:1.3.5"
     include 'org.reflections:reflections:0.9.12'
 }
