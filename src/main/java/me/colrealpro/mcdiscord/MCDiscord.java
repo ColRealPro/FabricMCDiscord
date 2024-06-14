@@ -2,6 +2,7 @@ package me.colrealpro.mcdiscord;
 
 import me.colrealpro.mcdiscord.config.ConfigHandler;
 import me.colrealpro.mcdiscord.discord.DiscordBot;
+import me.colrealpro.mcdiscord.events.EventBus;
 import me.colrealpro.mcdiscord.server.commands.ReloadConfigCommand;
 import me.colrealpro.mcdiscord.server.commands.ShowChannelCommand;
 import me.colrealpro.mcdiscord.server.commands.UnverifyCommand;
@@ -123,6 +124,8 @@ public class MCDiscord implements ModInitializer {
 
             channelID = Channels.get(0).getId();
         }
+
+        EventBus.setEventDispatchEnabled(true);
 
         MessageEmbed startupEmbed = new EmbedBuilder()
             .setTitle("Server Started!")

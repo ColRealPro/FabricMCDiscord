@@ -18,6 +18,7 @@ public class EventBus {
     private final List<Object> registeredObjects = new ArrayList<>();
     private static EventBus instance;
     private final boolean debugEnabled;
+    private static boolean dispatchEvents = false;
 
     private EventBus() {
         Reflections reflections = new Reflections(new ConfigurationBuilder()
@@ -40,6 +41,10 @@ public class EventBus {
         }
 
         this.debugEnabled = MCDiscord.config.getDirectConfig().getBoolean("Debug", false);
+    }
+
+    public static void setEventDispatchEnabled(boolean enabled) {
+        dispatchEvents = enabled;
     }
 
     public static EventBus getInstance() {
