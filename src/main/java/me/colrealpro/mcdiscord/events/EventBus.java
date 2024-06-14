@@ -63,7 +63,7 @@ public class EventBus {
         }
 
         for (Object obj : registeredObjects) {
-            LOGGER.info("Checking object: {}", obj.getClass().getSimpleName());
+            if (debugEnabled) LOGGER.info("Checking object: {}", obj.getClass().getSimpleName());
             for (Method method : obj.getClass().getMethods()) {
                 if (method.isAnnotationPresent(EventHandler.class) && method.getParameterCount() == 1
                 && method.getParameters()[0].getType().isAssignableFrom(event.getClass())) {
