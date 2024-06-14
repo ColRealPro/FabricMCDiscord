@@ -14,7 +14,8 @@ repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+    // See https://docs.gradle.org/current/userguide/dec
+    //laring_repositories.html
     // for more information about repositories.
 
     mavenCentral()
@@ -43,6 +44,11 @@ dependencies {
 
     // Reflections
     implementation 'org.reflections:reflections:0.9.12'
+
+    // include dependencies
+    include "net.dv8tion:JDA:5.0.0-beta.24"
+    include "dev.dejvokep:boosted-yaml:1.3.5"
+    include 'org.reflections:reflections:0.9.12'
 }
 
 processResources {
@@ -77,6 +83,7 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 }
+
 
 jar {
     from("LICENSE") {
