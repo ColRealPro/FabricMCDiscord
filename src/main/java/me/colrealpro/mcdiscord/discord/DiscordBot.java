@@ -11,6 +11,7 @@ import java.util.EnumSet;
 public class DiscordBot {
     private final JDABuilder builder;
     private JDA bot;
+    private boolean failed = false;
 
     public DiscordBot(String token) {
         EnumSet<GatewayIntent> intents = EnumSet.of(
@@ -32,8 +33,13 @@ public class DiscordBot {
         try {
             bot = builder.build();
         } catch (Exception e) {
+            failed = true;
             MCDiscord.LOGGER.error("Failed to start Discord bot: ", e);
         }
+    }
+
+    public boolean failed() {
+        return failed;
     }
 
     public void stop() {

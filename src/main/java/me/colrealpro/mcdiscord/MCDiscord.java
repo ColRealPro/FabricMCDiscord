@@ -80,6 +80,11 @@ public class MCDiscord implements ModInitializer {
         discordBot = new DiscordBot(token);
         discordBot.start();
 
+        if (discordBot.failed()) {
+            LOGGER.error("Failed to start Discord bot, stopping initialization...");
+            return;
+        }
+
         try {
             discordBot.getBot().awaitReady();
         } catch (InterruptedException e) {
