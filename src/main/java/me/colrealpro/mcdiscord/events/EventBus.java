@@ -63,6 +63,10 @@ public class EventBus {
     }
 
     public void dispatch(CancellableEvent event) {
+        if (!dispatchEvents) {
+            return;
+        }
+
         if (debugEnabled) {
             LOGGER.info("Dispatching event {} to {} listeners", event.getClass().getSimpleName(), registeredObjects.size());
         }
